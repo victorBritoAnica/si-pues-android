@@ -85,6 +85,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.security.crypto)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

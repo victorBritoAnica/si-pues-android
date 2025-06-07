@@ -1,6 +1,7 @@
 package com.sipues.di
 
 
+import com.sipues.data.network.AuthApiService
 import com.sipues.data.network.BusinessApiService
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
 
-    const val currentBaseUrl = "http://10.0.2.2:3000/api/"
+    const val currentBaseUrl = "https://si-pues-backend-e99306a2eed5.herokuapp.com/api/"
 
 
 
@@ -55,5 +56,11 @@ object NetWorkModule {
     @Singleton
     fun provideBusinessApiService (retrofit: Retrofit) : BusinessApiService {
         return retrofit.create(BusinessApiService:: class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
     }
 }
