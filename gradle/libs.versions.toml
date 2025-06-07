@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.10.1"
 kotlin = "1.9.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -21,7 +21,7 @@ compose = "1.7.8"
 netinfo = "1.0.0"
 toolsCore = "1.0.0-alpha12"
 lifecycleLivedataKtx = "2.8.7"
-
+securityCrypto = "1.1.0-alpha03"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,7 +58,7 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version = "2.6
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose" }
 androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
-
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
