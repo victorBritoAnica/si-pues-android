@@ -5,8 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 object Login
 
+// DrawerScreens
 @Serializable
 object Home
 
 @Serializable
-object PokemonList
+object SearchScreen

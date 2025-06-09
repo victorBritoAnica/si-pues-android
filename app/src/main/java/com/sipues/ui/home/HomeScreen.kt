@@ -17,10 +17,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sipues.viewmodel.BusinessViewModel
 
 @Composable
-fun HomeScreen(viewModel: BusinessViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: BusinessViewModel = hiltViewModel(),
+) {
     val state by viewModel.state.collectAsState()
 
-    // Cargar los datos al entrar
     LaunchedEffect(Unit) {
         viewModel.loadBusiness()
     }

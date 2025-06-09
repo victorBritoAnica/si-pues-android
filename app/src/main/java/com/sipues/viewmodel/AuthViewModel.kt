@@ -33,6 +33,9 @@ class AuthViewModel @Inject constructor(
     private val _state = MutableStateFlow<AuthState>(AuthState.Loading)
     val state: StateFlow<AuthState> = _state.asStateFlow()
 
+    val isAuthenticated: Boolean
+        get() = tokenManager.getToken() != null
+
     var email by mutableStateOf("")
         private set
     var password by mutableStateOf("")
@@ -85,4 +88,7 @@ class AuthViewModel @Inject constructor(
         }
     }
     */
+    fun logout() {
+        tokenManager.clearToken()
+    }
 }
