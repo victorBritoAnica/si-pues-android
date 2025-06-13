@@ -1,7 +1,9 @@
 package com.sipues.ui.main
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -24,11 +26,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sipues.R
 import com.sipues.navigation.Home
 import com.sipues.ui.components.drawer.AppDrawer
 import com.sipues.ui.home.HomeScreen
+import com.sipues.ui.login.LoginScreen
+import com.sipues.ui.search.SearchScreen
 import com.sipues.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
 
@@ -54,7 +61,7 @@ fun MainAppScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(190.dp),
-                color = Color.White,
+                color = colorResource(R.color.background_light),
                 shadowElevation = 8.dp
             ) {
                 AppDrawer(
@@ -80,23 +87,31 @@ fun MainAppScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Si Pues") },
+                    title = {
+                        Image(
+                            painter = painterResource(id = R.drawable.si_pues),
+                            contentDescription = "Logo Si Pues",
+                            modifier = Modifier
+                                .height(40.dp) // Ajusta el tamaño según necesites
+                                .padding(start = 8.dp) // Espaciado opcional
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorResource(R.color.vago_primary),
+                        titleContentColor = colorResource(R.color.text_light),
+                        actionIconContentColor = colorResource(R.color.morelos_accent)
+                    ),
                     navigationIcon = {
                         IconButton(
                             onClick = { scope.launch { drawerState.open() } }
                         ) {
                             Icon(
-                                Icons.Default.Menu,
+                                imageVector = Icons.Default.Menu,
                                 contentDescription = "Menú",
-                                tint = Color.White
+                                tint = colorResource(R.color.text_light) // Usa el color claro definido
                             )
                         }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Black,
-                        titleContentColor = Color.White,
-                        actionIconContentColor = Color.White
-                    )
+                    }
                 )
             }
         ) {
