@@ -51,46 +51,78 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += listOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "META-INF/LICENSE-notice.md"
+            )
         }
     }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.datastore)
-    implementation(libs.androidx.tools.core)
-    ksp(libs.hilt.compiler)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.coil.compose)
-    implementation(libs.accompanist.permissions)
-    implementation(libs.play.services.location)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.security.crypto)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // ===== [ CORE ANDROID ] =====
+    implementation(libs.androidx.core.ktx)              // Kotlin extensions
+    implementation(libs.androidx.lifecycle.runtime.ktx) // Lifecycle
+    implementation(libs.androidx.activity.compose)      // Compose Activity
+    implementation(libs.security.crypto)               // Encrypted SharedPrefs
+
+    // ===== [ COMPOSE ] =====
+    implementation(platform(libs.androidx.compose.bom)) // BOM para versiones
+    implementation(libs.androidx.ui)                    // Compose UI
+    implementation(libs.androidx.ui.graphics)           // Graphics
+    implementation(libs.androidx.ui.tooling.preview)    // Preview
+    implementation(libs.androidx.material3)             // Material3
+    implementation(libs.androidx.compose.material.icons.extended) // Icons
+    implementation(libs.androidx.lifecycle.runtime.compose) // Compose + Lifecycle
+    implementation(libs.androidx.navigation.compose)    // Navigation
+
+    // ===== [ NETWORKING ] =====
+    implementation(libs.retrofit)                       // Retrofit
+    implementation(libs.retrofit.converter.gson)        // Gson converter
+    implementation(libs.okhttp)                         // OkHttp
+    implementation(libs.okhttp.logging.interceptor)     // Logging interceptor
+    implementation(libs.kotlinx.serialization.json)     // Kotlin Serialization
+
+    // ===== [ DATABASE & PERSISTENCE ] =====
+    implementation(libs.androidx.room.runtime)          // Room
+    implementation(libs.androidx.room.ktx)              // Room Coroutines
+    ksp(libs.androidx.room.compiler)                    // Room compiler
+    implementation(libs.androidx.datastore)             // DataStore (Preferences)
+
+    // ===== [ DI (HILT) ] =====
+    implementation(libs.hilt.android)                   // Hilt
+    implementation(libs.androidx.hilt.navigation.compose) // Hilt + Compose
+    ksp(libs.hilt.compiler)                             // Hilt compiler
+
+    // ===== [ IMAGES ] =====
+    implementation(libs.coil.compose)                   // Coil para imágenes
+
+    // ===== [ UTILITIES ] =====
+    implementation(libs.accompanist.permissions)        // Permisos
+    implementation(libs.play.services.location)         // Location
+    implementation(libs.androidx.tools.core)            // Android Tools (opcional)
+
+    // ===== [ TESTING - UNIT ] =====
+    testImplementation(libs.junit)                      // JUnit
+    testImplementation(libs.mockk)                      // MockK (para mocks estándar)
+    testImplementation(libs.coroutines.test)            // Coroutines testing
+
+    // ===== [ TESTING - ANDROID ] =====
+    androidTestImplementation(libs.androidx.test.junit) // JUnit Ext
+    androidTestImplementation(libs.mockk.android)              // MockK para Android
+    androidTestImplementation(libs.androidx.espresso.core) // Espresso
+    androidTestImplementation(libs.kakao)               // Kakao (DSL para Espresso)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.ui.test)
+    // ===== [ DEBUG ] =====
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 }

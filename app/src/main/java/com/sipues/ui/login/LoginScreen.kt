@@ -1,6 +1,5 @@
 package com.sipues.ui.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +31,6 @@ fun LoginScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    // Observar el estado de éxito
     LaunchedEffect(state) {
         if (state is AuthViewModel.AuthState.Success) {
             onLoginSuccess()
@@ -46,7 +44,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Campo de email
+
         OutlinedTextField(
             value = viewModel.email,
             onValueChange = viewModel::updateEmail,
@@ -57,7 +55,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Campo de contraseña
+
         OutlinedTextField(
             value = viewModel.password,
             onValueChange = viewModel::updatePassword,
@@ -69,7 +67,7 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botón de login
+
         Button(
             onClick = viewModel::login,
             modifier = Modifier.fillMaxWidth()
