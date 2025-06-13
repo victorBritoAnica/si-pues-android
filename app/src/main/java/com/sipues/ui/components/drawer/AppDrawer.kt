@@ -12,12 +12,11 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sipues.navigation.Home
-import com.sipues.navigation.SearchScreen
+import com.sipues.navigation.Routes
 
 @Composable
 fun AppDrawer(
-    currentScreen: Any,
+    currentScreen: String,
     onHomeSelected: () -> Unit,
     onSearchSelected: () -> Unit,
     onLogout: () -> Unit,
@@ -31,7 +30,7 @@ fun AppDrawer(
         DrawerItem(
             icon = Icons.Default.Home,
             label = "Inicio",
-            selected = currentScreen is Home,
+            selected = currentScreen == Routes.HOME,
             onItemClick = {
                 onHomeSelected()
                 closeDrawer()
@@ -41,7 +40,7 @@ fun AppDrawer(
         DrawerItem(
             icon = Icons.Default.Search,
             label = "Buscar",
-            selected = currentScreen is SearchScreen,
+            selected = currentScreen == Routes.SEARCH,
             onItemClick = {
                 onSearchSelected()
                 closeDrawer()
