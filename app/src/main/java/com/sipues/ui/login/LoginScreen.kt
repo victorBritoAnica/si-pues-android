@@ -34,7 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -102,7 +105,10 @@ fun LoginScreen(
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                IconButton(
+                    onClick = { passwordVisible = !passwordVisible },
+                    modifier = Modifier.testTag("password_visibility_toggle")
+                ) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                         contentDescription = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
@@ -128,21 +134,26 @@ fun LoginScreen(
                     viewModel.login()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
+            modifier = Modifier.fillMaxWidth()
+                .testTag("login_button"),
+                colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF4527A0)
             )
         ) {
             if (state is AuthViewModel.AuthState.Loading) {
                 CircularProgressIndicator(
                     color = Color.White,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
+                        .testTag("loading_indicator")
+                        .semantics { contentDescription = "Cargando" }
                 )
             } else {
                 Text(
                     text = "Iniciar sesión",
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.testTag("login_button_text")
                 )
             }
         }
