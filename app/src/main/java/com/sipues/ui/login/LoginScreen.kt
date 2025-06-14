@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -48,7 +47,6 @@ import com.sipues.viewmodel.AuthViewModel
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     onLoginSuccess: () -> Unit,
-    onBack: () -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
     var passwordVisible by remember { mutableStateOf(false) }
@@ -77,7 +75,6 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(80.dp))
         )
 
-        // Email Field
         OutlinedTextField(
             value = viewModel.email,
             onValueChange = viewModel::updateEmail,
@@ -95,9 +92,7 @@ fun LoginScreen(
             )
         }
 
-
         Spacer(modifier = Modifier.height(16.dp))
-
 
         OutlinedTextField(
             value = viewModel.password,
@@ -162,4 +157,3 @@ fun LoginScreen(
         }
     }
 }
-

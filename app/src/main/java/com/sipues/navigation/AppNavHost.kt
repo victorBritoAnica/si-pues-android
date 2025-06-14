@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.sipues.ui.home.HomeScreen
 import com.sipues.ui.login.LoginScreen
 import com.sipues.ui.search.SearchScreen
+import com.sipues.ui.splash.SplashScreen
 import com.sipues.viewmodel.AuthViewModel
 
 @Composable
@@ -20,28 +21,30 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = Routes.SPLASH,
         modifier = modifier
     ) {
+
+        composable(Routes.SPLASH) {
+            SplashScreen(navController)
+        }
+
         composable(Routes.HOME) {
             HomeScreen()
         }
 
         composable(Routes.SEARCH) {
-            SearchScreen(
-                onBack = { navController.popBackStack() }
-            )
+            SearchScreen()
         }
 
         composable(Routes.LOGIN) {
             LoginScreen(
                 viewModel = authViewModel,
                 onLoginSuccess = {
-                    navController.navigate("home") {
-                        popUpTo(Routes.LOGIN) { inclusive = true } // limpia el backstack
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.LOGIN) { inclusive = true }
                     }
-                },
-                onBack = {navController.popBackStack() }
+                }
             )
         }
     }
