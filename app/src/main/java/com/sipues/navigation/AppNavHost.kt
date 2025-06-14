@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.sipues.ui.home.HomeScreen
 import com.sipues.ui.login.LoginScreen
 import com.sipues.ui.search.SearchScreen
+import com.sipues.ui.splash.SplashScreen
 import com.sipues.viewmodel.AuthViewModel
 
 @Composable
@@ -20,9 +21,14 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.HOME,
+        startDestination = Routes.SPLASH,
         modifier = modifier
     ) {
+
+        composable(Routes.SPLASH) {
+            SplashScreen(navController)
+        }
+
         composable(Routes.HOME) {
             HomeScreen()
         }
