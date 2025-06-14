@@ -20,7 +20,7 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = Routes.HOME,
         modifier = modifier
     ) {
         composable(Routes.HOME) {
@@ -28,20 +28,17 @@ fun AppNavHost(
         }
 
         composable(Routes.SEARCH) {
-            SearchScreen(
-                onBack = { navController.popBackStack() }
-            )
+            SearchScreen()
         }
 
         composable(Routes.LOGIN) {
             LoginScreen(
                 viewModel = authViewModel,
                 onLoginSuccess = {
-                    navController.navigate("home") {
-                        popUpTo(Routes.LOGIN) { inclusive = true } // limpia el backstack
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.LOGIN) { inclusive = true }
                     }
-                },
-                onBack = {navController.popBackStack() }
+                }
             )
         }
     }

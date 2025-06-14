@@ -133,5 +133,6 @@ class AuthViewModel @Inject constructor(
     fun logout() {
         tokenManager.clearToken()
         _isAuthenticated.value = false
+        _state.value = AuthState.Idle
     }
 }
