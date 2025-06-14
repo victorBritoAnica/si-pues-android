@@ -27,7 +27,9 @@ import com.sipues.viewmodel.AuthViewModel
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onBack: () -> Unit,
+
 ) {
     val state by viewModel.state.collectAsState()
 

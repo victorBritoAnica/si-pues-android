@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.sipues.navigation.NavigationWrapper
+import androidx.navigation.compose.rememberNavController
+import com.sipues.ui.main.MainLayout
 import com.sipues.ui.theme.TemplateTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TemplateTheme {
-                NavigationWrapper()
+                val navController = rememberNavController()
+                MainLayout(navController = navController)
             }
         }
     }

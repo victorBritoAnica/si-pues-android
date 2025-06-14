@@ -16,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import com.sipues.R
 
 @Composable
 fun DrawerItem(
@@ -25,9 +27,9 @@ fun DrawerItem(
     selected: Boolean,
     onItemClick: () -> Unit
 ) {
-    val backgroundColor = if (selected) Color(0xFFE3F2FD) else Color.Transparent
-    val textColor = if (selected) Color(0xFF0D47A1) else Color(0xFF424242)
-    val iconColor = if (selected) Color(0xFF1976D2) else Color(0xFF757575)
+    val backgroundColor = if (selected) colorResource(R.color.vago_primary_light) else Color.Transparent
+    val textColor = if (selected) colorResource(R.color.vago_primary) else colorResource(R.color.text_dark)
+    val iconColor = if (selected) colorResource(R.color.morelos_accent) else colorResource(R.color.vago_primary)
 
     Row(
         modifier = Modifier
@@ -43,12 +45,13 @@ fun DrawerItem(
             tint = iconColor,
             modifier = Modifier.size(24.dp)
         )
+
         Spacer(modifier = Modifier.width(24.dp))
         Text(
             text = label,
             color = textColor,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
-        )
+            modifier = Modifier.weight(1f))
+
     }
 }

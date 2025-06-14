@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="vago_primary">#FF4527A0</color>    <!-- Morado DE VAGO -->
+    <color name="morelos_accent">#FFE53935</color>   <!-- Rojo XMORELOS -->
+    <color name="background_light">#FFF5F5F5</color> <!-- Fondo claro -->
+
+    <!-- Colores auxiliares (derivados de tu paleta) -->
+    <color name="vago_primary_light">#E6D0BCFF</color> <!-- Morado claro (20% opacity) -->
+    <color name="text_dark">#FF212121</color>         <!-- Texto oscuro -->
+    <color name="text_light">#FFFFFFFF</color>        <!-- Texto claro -->
 </resources>
