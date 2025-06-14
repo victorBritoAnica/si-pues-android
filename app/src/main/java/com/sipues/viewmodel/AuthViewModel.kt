@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,32 +22,68 @@ class AuthViewModel @Inject constructor(
     private val tokenManager: TokenManager
 ) : ViewModel() {
 
-    // Estados posibles
     sealed interface AuthState {
+        object Idle : AuthState
         object Loading : AuthState
         data class Success(val authResponse: Result<AuthResponse>) : AuthState
         data class Error(val message: String) : AuthState
     }
 
-
-    // Estado actual
-    private val _state = MutableStateFlow<AuthState>(AuthState.Loading)
+    private val _state = MutableStateFlow<AuthState>(AuthState.Idle)
     val state: StateFlow<AuthState> = _state.asStateFlow()
 
     val isAuthenticated: Boolean
         get() = tokenManager.getToken() != null
-
     var email by mutableStateOf("")
         private set
     var password by mutableStateOf("")
         private set
 
+    var emailError by mutableStateOf<String?>(null)
+        private set
+    var passwordError by mutableStateOf<String?>(null)
+        private set
+
     fun updateEmail(newEmail: String) {
         email = newEmail
+        emailError = null
     }
 
     fun updatePassword(newPassword: String) {
         password = newPassword
+        passwordError = null
+    }
+
+    fun validateInputs(): Boolean {
+        var isValid = true
+
+        if (email.isEmpty()) {
+            emailError = "El email es requerido"
+            isValid = false
+        } else if (!isValidEmail(email)) {
+            emailError = "Ingresa un email válido"
+            isValid = false
+        }
+
+        if (password.isEmpty()) {
+            passwordError = "La contraseña es requerida"
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        val emailPattern = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+        )
+        return emailPattern.matcher(email).matches()
     }
 
     fun login() {
@@ -88,6 +125,7 @@ class AuthViewModel @Inject constructor(
         }
     }
     */
+
     fun logout() {
         tokenManager.clearToken()
     }
