@@ -12,12 +12,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.sipues.R
 import com.sipues.navigation.AppNavHost
 import com.sipues.navigation.Routes
+import com.sipues.ui.components.ConfirmationDialog
 import com.sipues.ui.components.drawer.AppDrawer
 import kotlinx.coroutines.launch
 import com.sipues.viewmodel.AuthViewModel
@@ -31,6 +33,25 @@ fun MainLayout(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val isAuthenticated by authViewModel.isAuthenticated
+    var showLogoutDialog by remember { mutableStateOf(false) }
+
+    if (showLogoutDialog) {
+        ConfirmationDialog(
+            title = stringResource(R.string.logout_confirmation_title),
+            message = stringResource(R.string.logout_confirmation_message),
+            onConfirm = {
+                authViewModel.logout()
+                navController.navigate(Routes.HOME) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                }
+                scope.launch { drawerState.close() }
+                showLogoutDialog = false
+            },
+            onDismiss = { showLogoutDialog = false }
+        )
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -57,17 +78,12 @@ fun MainLayout(
                             scope.launch { drawerState.close() }
                         },
                         onLogout = {
-                            authViewModel.logout()
-                            navController.navigate(Routes.HOME)
-                            scope.launch {
-                                drawerState.close()
-                            }
+                            showLogoutDialog = true
+                            scope.launch { drawerState.close() }
                         },
                         onLogin = {
                             navController.navigate(Routes.LOGIN)
-                            scope.launch {
-                                drawerState.close()
-                            }
+                            scope.launch { drawerState.close() }
                         },
                         isAuthenticated = isAuthenticated
                     )

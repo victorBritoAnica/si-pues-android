@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">De vago x Morelos</string>
+    <string name="logout_confirmation_title">Cerrar sesión</string>
+    <string name="logout_confirmation_message">¿Estás seguro que deseas cerrar tu sesión?</string>
+    <string name="yes_confirm">Sí, cerrar sesión</string>
+    <string name="cancel">Cancelar</string>
 </resources>
