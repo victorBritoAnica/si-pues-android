@@ -1,5 +1,6 @@
 package com.sipues.viewmodel
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -32,8 +33,10 @@ class AuthViewModel @Inject constructor(
     private val _state = MutableStateFlow<AuthState>(AuthState.Idle)
     val state: StateFlow<AuthState> = _state.asStateFlow()
 
-    val isAuthenticated: Boolean
-        get() = tokenManager.getToken() != null
+    private val _isAuthenticated = mutableStateOf(tokenManager.getToken() != null)
+    val isAuthenticated: State<Boolean> = _isAuthenticated
+
+
     var email by mutableStateOf("")
         private set
     var password by mutableStateOf("")
@@ -95,6 +98,7 @@ class AuthViewModel @Inject constructor(
                     response.getOrNull()?.let {
                         tokenManager.saveToken(it.token)
                         _state.value = AuthState.Success(response)
+                        _isAuthenticated.value = true
                     }
                 } else {
                     _state.value = AuthState.Error(
@@ -128,5 +132,6 @@ class AuthViewModel @Inject constructor(
 
     fun logout() {
         tokenManager.clearToken()
+        _isAuthenticated.value = false
     }
 }

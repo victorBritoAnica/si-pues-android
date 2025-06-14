@@ -30,7 +30,7 @@ fun MainLayout(
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val isAuthenticated by remember { derivedStateOf { authViewModel.isAuthenticated } }
+    val isAuthenticated by authViewModel.isAuthenticated
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -58,6 +58,7 @@ fun MainLayout(
                         },
                         onLogout = {
                             authViewModel.logout()
+                            navController.navigate(Routes.HOME)
                             scope.launch {
                                 drawerState.close()
                             }
