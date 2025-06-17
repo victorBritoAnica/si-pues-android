@@ -1,55 +1,70 @@
 package com.sipues.ui.home
 
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.sipues.viewmodel.BusinessViewModel
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.sipues.R
-import com.sipues.viewmodel.BusinessViewModel
+import com.sipues.ui.components.BusinessCard
 
 @Composable
 fun HomeScreen(
     viewModel: BusinessViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.businessState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadBusiness()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = colorResource(R.color.background_light))
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
         when (state) {
             is BusinessViewModel.BusinessState.Loading -> {
-                CircularProgressIndicator(color = Color.White)
-            }
-            is BusinessViewModel.BusinessState.Success -> {
-                val businessList = (state as BusinessViewModel.BusinessState.Success).businessList
-                businessList.forEach { business ->
-                    Text("Nombre del negocio: ${business.name}")
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
-            is BusinessViewModel.BusinessState.Error -> {
-                val errorMessage = (state as BusinessViewModel.BusinessState.Error).message
-                Text("Error: $errorMessage")
+
+            is BusinessViewModel.BusinessState.Success -> {
+                val businesses = (state as BusinessViewModel.BusinessState.Success).businessList
+
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(vertical = 12.dp)
+                ) {
+                    items(businesses) { business ->
+                        BusinessCard(business = business)
+                    }
+                }
             }
+
+            is BusinessViewModel.BusinessState.Error -> {
+                val message = (state as BusinessViewModel.BusinessState.Error).message
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Error: $message",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+
+            else -> Unit
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.sipues.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sipues.data.model.response.Business
