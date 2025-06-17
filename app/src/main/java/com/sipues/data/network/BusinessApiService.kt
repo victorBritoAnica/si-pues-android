@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface BusinessApiService {
     @GET("business")
-    suspend fun getBusinessList(): List<Business>
+    suspend fun getBusiness(): List<Business>
 }
 
